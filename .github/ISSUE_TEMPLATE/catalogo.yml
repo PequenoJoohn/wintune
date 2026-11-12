@@ -1,0 +1,36 @@
+name: Serviço no catálogo
+description: Sugerir um serviço novo ou corrigir a descrição/risco de um existente.
+labels: [catálogo]
+body:
+  - type: input
+    id: nome
+    attributes:
+      label: Nome do serviço
+      description: O nome interno (coluna "Nome" em services.msc → Propriedades), não o nome de exibição.
+      placeholder: "DiagTrack"
+    validations:
+      required: true
+  - type: dropdown
+    id: tipo
+    attributes:
+      label: Tipo de sugestão
+      options:
+        - Adicionar ao catálogo
+        - Corrigir descrição
+        - Mudar o nível de risco
+        - Deveria estar bloqueado
+    validations:
+      required: true
+  - type: textarea
+    id: efeito
+    attributes:
+      label: O que para de funcionar se for desativado?
+    validations:
+      required: true
+  - type: textarea
+    id: fonte
+    attributes:
+      label: Fonte e versões do Windows testadas
+      description: Link da documentação da Microsoft e/ou em quais versões você testou.
+    validations:
+      required: true

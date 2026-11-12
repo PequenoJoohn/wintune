@@ -1,0 +1,49 @@
+name: Relatar um bug
+description: Algo não funciona como deveria.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por relatar! Se o Windows ficou instável depois de usar o WinTune, veja
+        primeiro "Como restaurar manualmente" no README.
+  - type: textarea
+    id: descricao
+    attributes:
+      label: O que aconteceu?
+      description: Descreva o problema e o que você esperava que acontecesse.
+    validations:
+      required: true
+  - type: textarea
+    id: passos
+    attributes:
+      label: Passos para reproduzir
+      placeholder: |
+        1. Abrir a tela Serviços
+        2. Desligar o serviço X
+        3. ...
+    validations:
+      required: true
+  - type: input
+    id: versao
+    attributes:
+      label: Versão do WinTune
+      placeholder: "0.1.0"
+    validations:
+      required: true
+  - type: input
+    id: windows
+    attributes:
+      label: Versão do Windows
+      description: Rode `winver` para ver.
+      placeholder: "Windows 11 Pro 24H2 (build 26100)"
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Trecho do log
+      description: |
+        Os logs ficam em `%APPDATA%\WinTune\logs`. Cole as linhas próximas ao erro.
+        Revise antes de colar e remova nomes de usuário ou dados pessoais.
+      render: text

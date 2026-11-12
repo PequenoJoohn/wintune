@@ -1,0 +1,20 @@
+name: Sugerir uma funcionalidade
+description: Uma ideia para melhorar o WinTune.
+labels: [melhoria]
+body:
+  - type: textarea
+    id: problema
+    attributes:
+      label: Qual problema isso resolve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposta
+    attributes:
+      label: Como você imagina a solução?
+    validations:
+      required: true
+  - type: textarea
+    id: alternativas
+    attributes:
+      label: Alternativas consideradas

@@ -1,0 +1,25 @@
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+  <!-- NAO adicionar a declaracao <?xml ...?>: o Tauri embute cada linha com um espaco
+       a frente, o que invalida o XML e impede o app de abrir (erro 14001). -->
+  <!-- Common Controls v6: exigido pelo Tauri/WebView2 -->
+  <dependency>
+    <dependentAssembly>
+      <assemblyIdentity
+        type="win32"
+        name="Microsoft.Windows.Common-Controls"
+        version="6.0.0.0"
+        processorArchitecture="*"
+        publicKeyToken="6595b64144ccf1df"
+        language="*"
+      />
+    </dependentAssembly>
+  </dependency>
+  <!-- O WinTune altera servicos do Windows: sempre exige elevacao (UAC). -->
+  <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+    <security>
+      <requestedPrivileges>
+        <requestedExecutionLevel level="requireAdministrator" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+</assembly>

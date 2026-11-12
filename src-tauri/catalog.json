@@ -1,0 +1,310 @@
+[
+  {
+    "name": "DiagTrack",
+    "categoria": "Telemetria",
+    "risco": "seguro",
+    "descricao": "Experiências do Usuário Conectado e Telemetria: coleta dados de uso e diagnóstico e os envia à Microsoft. Desativado, o Windows deixa de enviar essa telemetria; nenhum recurso do dia a dia é afetado.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "dmwappushservice",
+    "categoria": "Telemetria",
+    "risco": "seguro",
+    "descricao": "Roteamento de mensagens push WAP: encaminha dados de telemetria e mensagens de gerenciamento de dispositivos. Desativado, afeta apenas PCs gerenciados por MDM/Intune de empresas.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "diagnosticshub.standardcollector.service",
+    "categoria": "Telemetria",
+    "risco": "seguro",
+    "descricao": "Coletor Padrão do Hub de Diagnóstico da Microsoft: coleta eventos em tempo real para ferramentas de diagnóstico. Desativado, o profiler do Visual Studio e alguns relatórios de desempenho deixam de funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "WerSvc",
+    "categoria": "Telemetria",
+    "risco": "seguro",
+    "descricao": "Relatório de Erros do Windows: envia à Microsoft relatórios quando programas travam. Desativado, os travamentos deixam de ser reportados e a janela 'procurando uma solução' não aparece mais.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "wisvc",
+    "categoria": "Telemetria",
+    "risco": "seguro",
+    "descricao": "Serviço do Windows Insider: dá suporte ao programa de versões de teste do Windows. Desativado, você não recebe builds Insider; quem não participa do programa não percebe diferença.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "XblAuthManager",
+    "categoria": "Xbox/Jogos",
+    "risco": "seguro",
+    "descricao": "Gerenciador de Autenticação Xbox Live: faz o login na conta Xbox. Desativado, jogos da Microsoft Store/Game Pass e o app Xbox não conseguem entrar na sua conta.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "XblGameSave",
+    "categoria": "Xbox/Jogos",
+    "risco": "seguro",
+    "descricao": "Salvamento de Jogos do Xbox Live: sincroniza saves de jogos com a nuvem do Xbox. Desativado, os saves de jogos Xbox/Game Pass deixam de sincronizar entre dispositivos.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "XboxNetApiSvc",
+    "categoria": "Xbox/Jogos",
+    "risco": "seguro",
+    "descricao": "Serviço de Rede Xbox Live: dá suporte a multiplayer e chat de voz do Xbox Live. Desativado, o multiplayer de jogos Xbox/Game Pass pode não funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "XboxGipSvc",
+    "categoria": "Xbox/Jogos",
+    "risco": "seguro",
+    "descricao": "Gerenciamento de Acessórios Xbox: gerencia controles e acessórios Xbox conectados. Desativado, atualizações de firmware e recursos extras de controles Xbox deixam de funcionar (o controle básico continua).",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "Spooler",
+    "categoria": "Impressão",
+    "risco": "moderado",
+    "descricao": "Spooler de Impressão: gerencia a fila de impressão. Desativado, NENHUMA impressora funciona, incluindo 'Imprimir em PDF' e impressoras de rede.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "PrintNotify",
+    "categoria": "Impressão",
+    "risco": "moderado",
+    "descricao": "Extensões e Notificações da Impressora: abre caixas de diálogo e notificações de impressoras. Desativado, algumas telas de configuração e avisos de impressoras deixam de aparecer.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "stisvc",
+    "categoria": "Impressão",
+    "risco": "moderado",
+    "descricao": "Aquisição de Imagens do Windows (WIA): comunica com scanners e câmeras. Desativado, scanners e a função de digitalizar de multifuncionais deixam de funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "WSearch",
+    "categoria": "Indexação/Busca",
+    "risco": "moderado",
+    "descricao": "Windows Search: indexa arquivos e e-mails para busca rápida. Desativado, a busca no Explorador e no menu Iniciar fica mais lenta e a pesquisa no Outlook deixa de usar o índice.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "RemoteRegistry",
+    "categoria": "Rede remota",
+    "risco": "seguro",
+    "descricao": "Registro Remoto: permite que outros computadores da rede alterem o Registro deste PC. Desativado, melhora a segurança; só afeta administração remota em redes corporativas.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "RemoteAccess",
+    "categoria": "Rede remota",
+    "risco": "seguro",
+    "descricao": "Roteamento e Acesso Remoto: transforma o PC em roteador/servidor VPN. Desativado, o PC deixa de aceitar conexões VPN de entrada; conexões VPN de saída continuam funcionando.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "TermService",
+    "categoria": "Rede remota",
+    "risco": "avancado",
+    "descricao": "Serviços de Área de Trabalho Remota: permite conectar-se a ESTE computador por RDP. Desativado, ninguém consegue acessar o PC remotamente — não desative se você usa este PC à distância.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "SessionEnv",
+    "categoria": "Rede remota",
+    "risco": "avancado",
+    "descricao": "Configuração da Área de Trabalho Remota: mantém as sessões e certificados do RDP. Desativado, a Área de Trabalho Remota para este PC deixa de funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "UmRdpService",
+    "categoria": "Rede remota",
+    "risco": "avancado",
+    "descricao": "Redirecionador de Portas da Área de Trabalho Remota: redireciona impressoras e unidades em sessões RDP. Desativado, impressoras e discos locais não aparecem nas sessões remotas.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "bthserv",
+    "categoria": "Bluetooth",
+    "risco": "moderado",
+    "descricao": "Serviço de Suporte a Bluetooth: descobre e associa dispositivos Bluetooth. Desativado, mouses, teclados, fones e controles Bluetooth deixam de funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "BTAGService",
+    "categoria": "Bluetooth",
+    "risco": "moderado",
+    "descricao": "Serviço de Gateway de Áudio Bluetooth: dá suporte ao perfil de viva-voz. Desativado, o microfone de fones Bluetooth e chamadas pelo headset deixam de funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "BthAvctpSvc",
+    "categoria": "Bluetooth",
+    "risco": "moderado",
+    "descricao": "Serviço AVCTP: transporte de controle de áudio/vídeo Bluetooth. Desativado, fones Bluetooth podem perder o áudio e os botões de play/pausa/volume.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmicguestinterface",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Interface de Serviço de Convidado do Hyper-V: copia arquivos entre o host e a máquina virtual. Só é útil se ESTE Windows roda dentro de uma VM Hyper-V; em PC físico não faz nada.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmicheartbeat",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Serviço de Pulsação do Hyper-V: informa ao host que a máquina virtual está respondendo. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmickvpexchange",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Serviço de Troca de Dados do Hyper-V: troca informações entre a máquina virtual e o host. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmicrdv",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Serviço de Virtualização de Área de Trabalho Remota do Hyper-V: comunicação entre a VM e o host para sessões remotas. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmicshutdown",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Serviço de Desligamento de Convidado do Hyper-V: permite ao host desligar a máquina virtual corretamente. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmictimesync",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Serviço de Sincronização de Data/Hora do Hyper-V: acerta o relógio da máquina virtual pelo host. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmicvmsession",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Serviço PowerShell Direct do Hyper-V: permite ao host abrir sessões PowerShell na máquina virtual. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "vmicvss",
+    "categoria": "Hyper-V",
+    "risco": "moderado",
+    "descricao": "Solicitante de Cópia de Sombra de Volume do Hyper-V: permite ao host fazer backup da máquina virtual. Só é útil se este Windows roda dentro de uma VM Hyper-V.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "MapsBroker",
+    "categoria": "Mapas/Localização",
+    "risco": "seguro",
+    "descricao": "Gerenciador de Mapas Baixados: mantém os mapas offline do app Mapas. Desativado, apps não acessam mapas baixados; quem não usa o app Mapas não percebe diferença.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "lfsvc",
+    "categoria": "Mapas/Localização",
+    "risco": "moderado",
+    "descricao": "Serviço de Geolocalização: informa a localização do PC aos apps. Desativado, Clima, Mapas, 'Localizar meu dispositivo' e o fuso horário automático deixam de saber onde você está.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "Fax",
+    "categoria": "Fax",
+    "risco": "seguro",
+    "descricao": "Fax: envia e recebe faxes usando um modem. Desativado, o recurso 'Windows Fax e Scan' deixa de enviar/receber fax; a digitalização não é afetada.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "SysMain",
+    "categoria": "Diversos",
+    "risco": "moderado",
+    "descricao": "SysMain (antigo Superfetch): pré-carrega na memória os programas mais usados. Desativado, reduz uso de disco e RAM em segundo plano, mas programas podem abrir mais devagar — especialmente em HD mecânico.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "RetailDemo",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Serviço de Demonstração de Varejo: controla o modo de demonstração usado em lojas. Desativado, nada muda em um PC de uso pessoal.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "WbioSrvc",
+    "categoria": "Diversos",
+    "risco": "avancado",
+    "descricao": "Serviço de Biometria do Windows: gerencia impressão digital e reconhecimento facial. Desativado, o Windows Hello por digital/rosto para de funcionar — tenha certeza de saber seu PIN ou senha antes de desativar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "TabletInputService",
+    "categoria": "Diversos",
+    "risco": "avancado",
+    "descricao": "Serviço do Teclado Virtual e Painel de Manuscrito: dá suporte a toque, caneta e teclado na tela. Desativado, o teclado virtual e a caneta deixam de funcionar e, em algumas versões do Windows 10, a digitação no menu Iniciar e em apps da Store pode falhar.",
+    "recomendado": "manual"
+  },
+  {
+    "name": "PhoneSvc",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Serviço de Telefonia: gerencia o estado de telefonia do dispositivo. Desativado, chamadas feitas pelo PC através do app Vincular ao Celular podem não funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "SEMgrSvc",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Gerenciador de Pagamentos e NFC/SE: gerencia pagamentos por aproximação e elementos seguros NFC. Desativado, pagamentos por NFC no PC deixam de funcionar (raro em desktops e notebooks).",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "WMPNetworkSvc",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Compartilhamento de Rede do Windows Media Player: compartilha a biblioteca de mídia com outros dispositivos (DLNA). Desativado, TVs e consoles deixam de enxergar a biblioteca do Media Player.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "icssvc",
+    "categoria": "Diversos",
+    "risco": "moderado",
+    "descricao": "Serviço de Hotspot Móvel do Windows: compartilha a internet do PC com outros dispositivos por Wi-Fi. Desativado, o recurso 'Hotspot móvel' deixa de funcionar.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "TrkWks",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Cliente de Rastreamento de Link Distribuído: mantém atalhos apontando para arquivos movidos em volumes NTFS da rede. Desativado, atalhos para arquivos movidos em rede podem quebrar; uso doméstico não é afetado.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "WalletService",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Serviço de Carteira: armazena objetos usados pelo app Carteira da Microsoft. Desativado, o app Carteira deixa de funcionar; a maioria dos usuários nunca o utiliza.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "WpcMonSvc",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Controle dos Pais: aplica as restrições do Microsoft Family Safety em contas de crianças. Desativado, limites de tempo e filtros de conteúdo de contas infantis deixam de ser aplicados.",
+    "recomendado": "disabled"
+  },
+  {
+    "name": "AJRouter",
+    "categoria": "Diversos",
+    "risco": "seguro",
+    "descricao": "Serviço de Roteador AllJoyn: comunica com dispositivos de Internet das Coisas compatíveis com AllJoyn. Desativado, apenas dispositivos AllJoyn (hoje raros) deixam de se comunicar com o PC.",
+    "recomendado": "disabled"
+  }
+]

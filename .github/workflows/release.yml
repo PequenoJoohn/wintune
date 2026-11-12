@@ -1,0 +1,41 @@
+name: Release
+
+# Publica um rascunho de release com o instalador ao enviar uma tag "v*", ex.: v0.1.0.
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Gerar instalador
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: src-tauri
+      - run: pnpm install --frozen-lockfile
+
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: WinTune ${{ github.ref_name }}
+          releaseBody: |
+            Baixe o `WinTune_*_x64-setup.exe` abaixo e execute. O app pede permissão de
+            administrador (UAC) porque altera serviços do Windows.
+
+            Veja as mudanças no [CHANGELOG](https://github.com/${{ github.repository }}/blob/main/CHANGELOG.md).
+          releaseDraft: true
+          prerelease: false
