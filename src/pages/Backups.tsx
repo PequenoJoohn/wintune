@@ -51,7 +51,7 @@ export function Backups({ recarregarServicos, mostrarRelatorio }: BackupsProps) 
     try {
       const info = await api.createSnapshot();
       toast.success("Backup criado", {
-        description: `${info.total_servicos} serviços salvos em ${formatarData(info.criado_em)}.`,
+        description: `${info.total_servicos} serviços${info.total_efeitos > 0 ? ` e ${info.total_efeitos} efeitos visuais` : ""} salvos em ${formatarData(info.criado_em)}.`,
       });
       await carregar();
     } catch (erro) {
@@ -117,8 +117,8 @@ export function Backups({ recarregarServicos, mostrarRelatorio }: BackupsProps) 
         <div>
           <h1 className="text-2xl font-semibold">Backups</h1>
           <p className="text-sm text-muted-foreground">
-            Cada backup guarda o tipo de inicialização e o estado de todos os serviços. Um backup
-            automático é criado antes de qualquer alteração em lote.
+            Cada backup guarda o tipo de inicialização e o estado de todos os serviços, além dos
+            efeitos visuais. Um backup automático é criado antes de qualquer alteração em lote.
           </p>
         </div>
         <div className="flex shrink-0 gap-2">
@@ -149,6 +149,7 @@ export function Backups({ recarregarServicos, mostrarRelatorio }: BackupsProps) 
               </div>
               <p className="truncate text-sm text-muted-foreground">
                 {snapshot.motivo} · {snapshot.total_servicos} serviços
+                {snapshot.total_efeitos > 0 && ` · ${snapshot.total_efeitos} efeitos visuais`}
               </p>
             </div>
             <Button

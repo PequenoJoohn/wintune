@@ -1,4 +1,11 @@
-import { History, LayoutDashboard, ListChecks, SlidersHorizontal, Wrench } from "lucide-react";
+import {
+  History,
+  LayoutDashboard,
+  ListChecks,
+  SlidersHorizontal,
+  Sparkles,
+  Wrench,
+} from "lucide-react";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Toaster, toast } from "sonner";
 import { ReportDialog, type RelatorioExibido } from "@/components/ReportDialog";
@@ -7,14 +14,16 @@ import { api, mensagemDeErro, type ApplyReport, type ServiceDto } from "@/lib/ap
 import { cn } from "@/lib/utils";
 import { Backups } from "@/pages/Backups";
 import { Dashboard } from "@/pages/Dashboard";
+import { Effects } from "@/pages/Effects";
 import { Profiles } from "@/pages/Profiles";
 import { Services } from "@/pages/Services";
 
-type Pagina = "dashboard" | "servicos" | "perfis" | "backups";
+type Pagina = "dashboard" | "servicos" | "efeitos" | "perfis" | "backups";
 
 const NAVEGACAO: { id: Pagina; rotulo: string; icone: ReactNode }[] = [
   { id: "dashboard", rotulo: "Dashboard", icone: <LayoutDashboard className="size-4" /> },
   { id: "servicos", rotulo: "Serviços", icone: <ListChecks className="size-4" /> },
+  { id: "efeitos", rotulo: "Efeitos visuais", icone: <Sparkles className="size-4" /> },
   { id: "perfis", rotulo: "Perfis", icone: <SlidersHorizontal className="size-4" /> },
   { id: "backups", rotulo: "Backups", icone: <History className="size-4" /> },
 ];
@@ -115,6 +124,7 @@ export default function App() {
           {pagina === "servicos" && (
             <Services servicos={servicos} carregando={carregando} recarregar={recarregar} />
           )}
+          {pagina === "efeitos" && <Effects mostrarRelatorio={mostrarRelatorio} />}
           {pagina === "perfis" && (
             <Profiles
               servicos={servicos}

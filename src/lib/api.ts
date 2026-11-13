@@ -50,6 +50,7 @@ export interface SnapshotInfo {
   criado_em: string;
   motivo: string;
   total_servicos: number;
+  total_efeitos: number;
 }
 
 export interface ItemPerfil {
@@ -91,6 +92,32 @@ export interface RestorePointResult {
   mensagem: string;
 }
 
+export type Impacto = "baixo" | "medio" | "alto";
+
+export interface EfeitoDto {
+  id: string;
+  nome: string;
+  descricao: string;
+  impacto: Impacto;
+  manter_ligado: boolean;
+  requer_logoff: boolean;
+  /** null quando não foi possível ler o estado atual. */
+  ligado: boolean | null;
+  original: boolean | null;
+  alterado: boolean;
+}
+
+export interface ListaEfeitos {
+  efeitos: EfeitoDto[];
+  /** Se preenchido, nenhuma alteração é permitida. */
+  bloqueio: string | null;
+}
+
+export interface AlteracaoEfeito {
+  id: string;
+  ligado: boolean;
+}
+
 /** Id fixo do snapshot criado na primeira execução. */
 export const ID_ORIGINAL = "original";
 
@@ -112,6 +139,10 @@ export const api = {
   deleteSnapshot: (id: string) => invoke<null>("delete_snapshot", { id }),
   createRestorePoint: () => invoke<RestorePointResult>("create_restore_point"),
   systemStats: () => invoke<SystemStats>("system_stats"),
+  listEffects: () => invoke<ListaEfeitos>("list_effects"),
+  setEffect: (id: string, ligado: boolean) => invoke<string | null>("set_effect", { id, ligado }),
+  applyEffects: (alteracoes: AlteracaoEfeito[], motivo: string) =>
+    invoke<ApplyReport>("apply_effects", { alteracoes, motivo }),
 };
 
 /** O backend devolve erros como texto em PT-BR. */

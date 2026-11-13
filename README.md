@@ -20,6 +20,9 @@ Feito com **Tauri v2** (backend em Rust) e **React + TypeScript + Vite + Tailwin
   pelo WinTune, uso de RAM e o botão **Restaurar original**.
 - **Serviços** — tabela com busca, filtros por categoria/risco/status, toggle por linha,
   seletor de tipo de inicialização e descrição em português do que cada serviço faz.
+- **Efeitos visuais** — liga/desliga animações, sombras, transparência e os demais itens
+  de "Opções de desempenho" do Windows, com os atalhos "Melhor desempenho", "Desligar
+  tudo" e "Restaurar original".
 - **Perfis** — Leve, Gamer e Máximo, com prévia (diff) antes de aplicar, além de perfis
   personalizados salvos a partir da seleção atual.
 - **Backups** — snapshots do estado dos serviços, com restauração e exclusão, e criação de
@@ -98,6 +101,9 @@ automaticamente.
 - Serviços de risco **Avançado** (Área de Trabalho Remota, biometria, teclado virtual)
   nunca entram em perfis: só podem ser desativados manualmente, com confirmação. Não
   desative a Área de Trabalho Remota se você acessa este PC à distância.
+- Efeitos visuais são configurações **da sua conta**. Se o WinTune for aberto com a senha
+  de outra conta de administrador, a tela de efeitos fica bloqueada para não alterar o
+  perfil errado. Alguns efeitos só mudam depois de sair e entrar de novo no Windows.
 - Alguns serviços só param de fato **depois de reiniciar** o computador; o app avisa
   quando isso acontece.
 - Atualizações grandes do Windows podem reativar serviços. Basta reaplicar o perfil.
@@ -137,7 +143,7 @@ Tudo fica em `%APPDATA%\WinTune\`:
 | Caminho | Conteúdo |
 | --- | --- |
 | `snapshots\original.json` | Estado dos serviços na primeira execução |
-| `snapshots\<data-hora>.json` | Backups manuais e automáticos (os 30 automáticos mais recentes) |
+| `snapshots\<data-hora>.json` | Backups manuais e automáticos (os 30 automáticos mais recentes), incluindo os efeitos visuais |
 | `profiles.json` | Perfis personalizados |
 | `logs\wintune-AAAA-MM-DD.log` | Registro de todas as operações |
 
@@ -192,6 +198,10 @@ foreach ($s in $backup.servicos) {
 Serviços protegidos pelo Windows responderão "Acesso negado"; isso é esperado e pode ser
 ignorado. Reinicie o computador ao final.
 
+**Efeitos visuais:** abra `SystemPropertiesPerformance.exe` (Win + R), escolha
+**Ajustar para obter uma melhor aparência** e clique em OK. A transparência fica em
+Configurações → Personalização → Cores → Efeitos de transparência.
+
 **4. Último recurso:** `rstrui.exe` abre a Restauração do Sistema do Windows, onde você
 pode voltar a um ponto de restauração anterior.
 
@@ -211,6 +221,7 @@ src-tauri/
     catalog.rs           Carga e validação do catálogo embutido
     snapshot.rs          Backups do estado dos serviços
     profiles.rs          Perfis pré-definidos e personalizados
+    effects.rs           Efeitos visuais (SystemParametersInfo + registro HKCU)
     ops.rs               Motor de operações (guard + log + backup antes de lotes)
     system.rs            RAM, verificação de elevação e ponto de restauração
     commands.rs          Comandos Tauri expostos ao front

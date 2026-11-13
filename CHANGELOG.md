@@ -7,6 +7,14 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Não lançado]
 
+### Adicionado
+
+- Tela **Efeitos visuais**: 18 efeitos do Windows (animações, sombras, transparência,
+  miniaturas, suavização de fontes etc.) com liga/desliga individual e os atalhos
+  "Melhor desempenho", "Desligar tudo" e "Restaurar original".
+- Backups passam a guardar também o estado dos efeitos visuais, e restaurar um backup
+  restaura os dois.
+
 ## [0.1.0] - 2026-11-12
 
 ### Adicionado

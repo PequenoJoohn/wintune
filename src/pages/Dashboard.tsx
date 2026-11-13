@@ -172,8 +172,8 @@ export function Dashboard({
           <div>
             <h2 className="text-lg font-semibold">Algo parou de funcionar?</h2>
             <p className="max-w-xl text-sm text-muted-foreground">
-              Volte todos os serviços ao estado em que estavam na primeira vez que o WinTune foi
-              aberto. O backup original nunca é sobrescrito.
+              Volte todos os serviços e efeitos visuais ao estado em que estavam na primeira vez
+              que o WinTune foi aberto. O backup original nunca é sobrescrito.
             </p>
           </div>
           <Button
@@ -198,7 +198,8 @@ export function Dashboard({
             {resumo.alterados > 0
               ? `${plural(resumo.alterados, "serviço voltará", "serviços voltarão")} ao tipo de inicialização original, e os que estavam em execução serão iniciados.`
               : "Nenhum serviço difere do estado original no momento."}{" "}
-            Um backup automático do estado atual será criado antes.
+            Os efeitos visuais também voltam ao original. Um backup automático do estado atual será
+            criado antes.
           </p>
         }
         onCancelar={() => setConfirmando(false)}

@@ -3,6 +3,7 @@
 
 pub mod catalog;
 pub mod commands;
+pub mod effects;
 pub mod error;
 pub mod guard;
 pub mod logger;
@@ -42,6 +43,9 @@ pub fn run() {
             commands::restore_snapshot,
             commands::delete_snapshot,
             commands::create_restore_point,
+            commands::list_effects,
+            commands::set_effect,
+            commands::apply_effects,
             commands::system_stats,
         ])
         .run(tauri::generate_context!());

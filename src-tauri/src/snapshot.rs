@@ -5,10 +5,12 @@
 use std::fs::{self, OpenOptions};
 use std::io::{ErrorKind, Write};
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 
 use chrono::{DateTime, Local};
 use serde::{Deserialize, Serialize};
 
+use crate::effects::{self, EffectsBackend};
 use crate::error::{AppError, AppResult};
 use crate::ops::Alteracao;
 use crate::scm::{ServiceBackend, ServiceEntry, StartType};
@@ -38,6 +40,21 @@ pub struct SnapshotService {
     pub rodando: bool,
 }
 
+/// Estado de um efeito visual no momento do backup.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct EstadoEfeito {
+    pub id: String,
+    pub ligado: bool,
+}
+
+/// Efeitos visuais salvos em um backup.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct EfeitosSalvos {
+    /// Valor de `VisualFXSetting` (modo da tela "Opções de desempenho").
+    pub modo_windows: Option<u32>,
+    pub estados: Vec<EstadoEfeito>,
+}
+
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Snapshot {
     pub versao: u32,
@@ -46,6 +63,9 @@ pub struct Snapshot {
     pub criado_em: DateTime<Local>,
     pub motivo: String,
     pub servicos: Vec<SnapshotService>,
+    /// Ausente em backups de versões sem efeitos visuais ou quando não foi possível lê-los.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub efeitos: Option<EfeitosSalvos>,
 }
 
 /// Resumo de um snapshot, para listagem no front.
@@ -56,6 +76,8 @@ pub struct SnapshotInfo {
     pub criado_em: DateTime<Local>,
     pub motivo: String,
     pub total_servicos: usize,
+    #[serde(default)]
+    pub total_efeitos: usize,
 }
 
 impl Snapshot {
@@ -81,6 +103,7 @@ impl Snapshot {
                     rodando: s.status.is_ativo(),
                 })
                 .collect(),
+            efeitos: None,
         }
     }
 
@@ -91,6 +114,7 @@ impl Snapshot {
             criado_em: self.criado_em,
             motivo: self.motivo.clone(),
             total_servicos: self.servicos.len(),
+            total_efeitos: self.efeitos.as_ref().map_or(0, |e| e.estados.len()),
         }
     }
 
@@ -126,11 +150,21 @@ impl Snapshot {
 #[derive(Debug, Clone)]
 pub struct SnapshotStore {
     dir: PathBuf,
+    /// Se presente, cada backup também guarda o estado dos efeitos visuais.
+    efeitos: Option<Arc<dyn EffectsBackend>>,
 }
 
 impl SnapshotStore {
     pub fn new(dir: impl Into<PathBuf>) -> Self {
-        Self { dir: dir.into() }
+        Self {
+            dir: dir.into(),
+            efeitos: None,
+        }
+    }
+
+    pub fn com_efeitos(mut self, efeitos: Arc<dyn EffectsBackend>) -> Self {
+        self.efeitos = Some(efeitos);
+        self
     }
 
     pub fn dir(&self) -> &Path {
@@ -211,7 +245,15 @@ impl SnapshotStore {
             SnapshotKind::Original => ID_ORIGINAL.to_string(),
             _ => self.novo_id(),
         };
-        let snapshot = Snapshot::capturar(id, tipo, motivo, &servicos);
+        let mut snapshot = Snapshot::capturar(id, tipo, motivo, &servicos);
+        // Efeitos são melhor-esforço: se não puderem ser lidos (ex.: app aberto por outra
+        // conta), o backup dos serviços continua valendo e alterações de efeitos são
+        // recusadas por falta de backup.
+        snapshot.efeitos = self
+            .efeitos
+            .as_ref()
+            .and_then(|b| effects::capturar(b.as_ref()).ok())
+            .filter(|e| !e.estados.is_empty());
         self.gravar_novo(&snapshot)?;
         if tipo == SnapshotKind::Automatico {
             // Limpeza de backups automáticos antigos é melhor-esforço.
@@ -599,11 +641,53 @@ mod tests {
                     rodando: false,
                 },
             ],
+            efeitos: None,
         };
 
         let plano = snapshot.plano_de_restauracao(&atuais);
         assert_eq!(plano.len(), 1);
         assert_eq!(plano[0].name, "A");
         assert_eq!(plano[0].start_type, StartType::Manual);
+    }
+
+    #[test]
+    fn backup_antigo_sem_efeitos_continua_legivel() {
+        let json = r#"{"versao":1,"id":"x","tipo":"manual","criado_em":"2026-11-12T10:00:00-03:00","motivo":"m","servicos":[]}"#;
+        let snapshot: Snapshot = serde_json::from_str(json).unwrap();
+        assert!(snapshot.efeitos.is_none());
+        assert_eq!(snapshot.info().total_efeitos, 0);
+        // E ao gravar de novo, o campo ausente não aparece.
+        assert!(
+            !serde_json::to_string(&snapshot)
+                .unwrap()
+                .contains("efeitos")
+        );
+    }
+
+    #[test]
+    fn backup_guarda_efeitos_quando_configurado() {
+        use crate::effects::mock::MockEfeitos;
+        let dir = tempfile::tempdir().unwrap();
+        let backend = MockBackend::com(MockBackend::new(), "Fax", StartType::Manual, false);
+
+        let sem = SnapshotStore::new(dir.path().join("a"));
+        assert_eq!(
+            sem.criar(&backend, SnapshotKind::Manual, "m")
+                .unwrap()
+                .total_efeitos,
+            0
+        );
+
+        let com =
+            SnapshotStore::new(dir.path().join("b")).com_efeitos(Arc::new(MockEfeitos::new()));
+        let info = com.criar(&backend, SnapshotKind::Manual, "m").unwrap();
+        assert_eq!(info.total_efeitos, crate::effects::EFEITOS.len());
+
+        // Outra conta: o backup dos serviços é criado, mas sem efeitos.
+        let outra = SnapshotStore::new(dir.path().join("c"))
+            .com_efeitos(Arc::new(MockEfeitos::new().outro_usuario()));
+        let info = outra.criar(&backend, SnapshotKind::Manual, "m").unwrap();
+        assert_eq!(info.total_servicos, 1);
+        assert_eq!(info.total_efeitos, 0);
     }
 }
